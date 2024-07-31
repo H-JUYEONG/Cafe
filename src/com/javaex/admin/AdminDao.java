@@ -61,7 +61,7 @@ public class AdminDao {
 		}
 	}
 
-	// Receipt 테이블의 리스트 전체출력, 리스트 새로고침
+	// 영수증 리스트 전체출력, 리스트 새로고침
 	public List<ReceiptVo> selectReceiptAll(String state) {
 
 		List<ReceiptVo> receiptList = new ArrayList<ReceiptVo>();
@@ -195,7 +195,7 @@ public class AdminDao {
 		return count;
 	}
 
-	// 판매수량 scan 날짜 select 날짜 해서 판매된 수량 리스트 전체 판매량 리스트 출력
+	// 날짜입력으로 판매 상품 출력
 	public List<SaleAmountVo> selectSaleAmountAll(String orderDate) {
 
 		List<SaleAmountVo> saleAmountList = new ArrayList<SaleAmountVo>();
@@ -252,7 +252,7 @@ public class AdminDao {
 
 	}
 
-	// 상품 관리 - insert
+	// 상품 리스트 추가
 	public int insertDrink(String name, String content, int price) {
 
 		int count = -1;
@@ -287,7 +287,7 @@ public class AdminDao {
 		return count;
 	}
 
-	// 상품 관리 - update
+	// 상품 리스트 수정
 	public int updateDrink(String name, String content, int price, int id) {
 
 		int count = -1;
@@ -326,7 +326,7 @@ public class AdminDao {
 		return count;
 	}
 
-	// 상품 관리 - delete
+	// 상품 리스트 삭제
 	public int deleteDrink(int id) {
 
 		int count = -1;
@@ -359,7 +359,7 @@ public class AdminDao {
 		return count;
 	}
 
-	// 상품 관리 - selectAll
+	// 상품 리스트 전체 출력
 	public List<DrinkVo> selectDrinkAll() {
 
 		List<DrinkVo> drinkList = new ArrayList<DrinkVo>();

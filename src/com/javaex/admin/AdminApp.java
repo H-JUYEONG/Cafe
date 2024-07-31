@@ -60,7 +60,7 @@ public class AdminApp {
 							int menu02 = sc.nextInt();
 
 							System.out.println("");
-							System.out.println("**********주문 상세 출력**********");
+							System.out.println("********** 주문 상세 출력 **********");
 							UserOrderVo userOrderVo = adminDao.selectReceiptOne(menu02);
 							System.out.println("영수증 번호: " + userOrderVo.getReceiptId());
 							System.out.println(
