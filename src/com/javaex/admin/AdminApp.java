@@ -212,10 +212,13 @@ public class AdminApp {
 				}
 
 			} else if (menu == 4) {
-				System.out.println("================================ 종료 =================================");
+				System.out.println("");
+				System.out.println("======================== 프로그램이 종료되었습니다. =========================");
 				break;
 			} else {
+				System.out.println("");
 				System.out.println("잘못된 번호입니다. 다시 입력해주세요.");
+				System.out.println("");
 			}
 
 		}
