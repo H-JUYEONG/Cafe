@@ -63,7 +63,7 @@ public class AdminApp {
 							System.out.println("");
 							System.out.println("********** 주문 상세 출력 **********");
 
-							List<UserOrderVo> userOrderList = adminDao.selectReceiptOne(menu02, "준비");
+							List<UserOrderVo> userOrderList = adminDao.selectReceiptOne(menu02);
 
 							if (userOrderList.size() == 0) {
 								System.out.println("");

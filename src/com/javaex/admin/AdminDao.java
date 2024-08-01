@@ -113,7 +113,7 @@ public class AdminDao {
 	}
 
 	// 영수증 번호를 입력받으면 회원이 주문한 영수증 번호, 음료, 수량 출력
-	public List<UserOrderVo> selectReceiptOne(int id, String state) {
+	public List<UserOrderVo> selectReceiptOne(int id) {
 		
 		List<UserOrderVo> userOrderList = new ArrayList<UserOrderVo>();
 		//UserOrderVo userOrderVo = null;
@@ -124,21 +124,16 @@ public class AdminDao {
 			// 3. SQL문 준비 / 바인딩 / 실행
 			// *sql문 준비
 			String query = "";
-			query += " select r.receipt_id, ";
+			query += " SELECT u.receipt_id, ";
 			query += "		  d.drink_name, ";
 			query += "        u.drink_cnt ";
-			query += " from Receipt r ";
-			query += " inner join UserOrder u ";
-			query += " on r.receipt_id = u.receipt_id ";
-			query += " inner join Drink d ";
-			query += " on u.drink_id = d.drink_id ";
-			query += " where r.receipt_id = ? ";
-			query += " and r.receipt_state = ? ";
-
+			query += " FROM UserOrder u ";
+			query += " INNER JOIN Drink d ";
+			query += " ON u.drink_id = d.drink_id ";
+			query += " WHERE u.receipt_id = ? ";
 			// *바인딩
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
-			pstmt.setString(2, state);
 
 			// *실행
 			rs = pstmt.executeQuery();

@@ -10,15 +10,13 @@ ORDER BY receipt_id
 ;
 
 -- 주문 상세 출력
-SELECT r.receipt_id,
+SELECT u.receipt_id,
 	   d.drink_name,
        u.drink_cnt
-FROM Receipt r
-INNER JOIN UserOrder u
-ON r.receipt_id = u.receipt_id
+FROM UserOrder u
 INNER JOIN Drink d
 ON u.drink_id = d.drink_id
-WHERE r.receipt_id = 3
+WHERE u.receipt_id = 10
 ;
 
 -- 주문 상태를 완료로 변경
@@ -43,7 +41,7 @@ on uo.receipt_id = r.receipt_id
 inner join Users u 
 on r.user_id = u.user_id
 
-where date_format(r.receipt_date, '%Y-%m-%d') = '2024-07-31'
+where date_format(r.receipt_date, '%Y-%m-%d') = '2024-07-24'
 group by d.drink_name, d.drink_price, r.receipt_date, u.user_id
 
 ;

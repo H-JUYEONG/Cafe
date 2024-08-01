@@ -19,15 +19,25 @@ where receipt_id = 2;
 
 update Receipt
 set receipt_state = '준비'
-where receipt_id = 2
+where receipt_id = 1
 ;
 
 update Receipt
-set receipt_date = '2024-07-31 10:00:00'
+set receipt_date = '2024-08-01 10:00:00'
 where receipt_id = 1;
 ;
 
 update userorder
 set receipt_id = 2
 where drink_id = 5;
+;
+
+update Drink
+set drink_content = '홍차와우유를 블렌딩'
+where drink_id = 5;
+;
+
+update Receipt
+set receipt_finish = null
+where receipt_id = 5;
 ;
