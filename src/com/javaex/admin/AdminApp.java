@@ -64,38 +64,72 @@ public class AdminApp {
 							System.out.println("********** 주문 상세 출력 **********");
 
 							List<UserOrderVo> userOrderList = adminDao.selectReceiptOne(menu02);
+							List<ReceiptVo> receiptListReady = adminDao.selectReceiptAll("준비");
+							List<ReceiptVo> receiptListFinish = adminDao.selectReceiptAll("완료");
 
-							if (userOrderList.size() == 0) {
-								System.out.println("");
-								System.out.println("이미 완료된 상품입니다.");
-								System.out.println("");
-								one = false;
-							} else {
-								for (int i = 0; i < userOrderList.size(); i++) {
-									System.out.print("영수증 번호: " + userOrderList.get(i).getReceiptId() + "\t");
-									System.out.print("상품명: " + userOrderList.get(i).getDrinkName() + "\t");
-									System.out.println("수량: " + userOrderList.get(i).getDrinkCnt());
+							boolean targetFinish = false;
+							boolean targetReady = false;
+
+							/* 영수증리스트에는 menu02 가 무조건 있어야 해 */
+							/* 영수증리스트에 menu02가 없으면 틀렸으니까 다시 입력하라고 해야해 */
+
+							/* 영수증리스트에 영수증id = menu02 이고, 상태가 완료면 -> 이미 완료된 상품입니다 메시지 출력 */
+							if (receiptListFinish.size() > 0) {
+								for (int i = 0; i < receiptListFinish.size(); i++) {
+									if (receiptListFinish.get(i).getReceiptId() == menu02) {
+										System.out.println("");
+										System.out.println("이미 완료된 상품입니다.");
+										System.out.println("");
+										one = false;
+										targetFinish = true;
+									}
 								}
+							}
+
+							if (receiptListReady.size() > 0) {
+								for (int i = 0; i < receiptListReady.size(); i++) {
+									if (receiptListReady.get(i).getReceiptId() == menu02) {
+										System.out.print("영수증 번호: " + userOrderList.get(i).getReceiptId() + "\t");
+										System.out.print("상품명: " + userOrderList.get(i).getDrinkName() + "\t");
+										System.out.println("수량: " + userOrderList.get(i).getDrinkCnt());
+										System.out.println("");
+										targetReady = true;
+									}
+								}
+							}
+
+							if (!targetFinish && !targetReady) {
 								System.out.println("");
-							}
-
-							System.out.print("1.완료 2.뒤로가기(0) >> ");
-							int menu03 = sc.nextInt();
-
-							if (menu03 == 1) {
-
-								// 주문 상태를 완료로 변경
-								adminDao.updateState("완료", menu02);
-								one = false;
-							} else if (menu03 == 0) {
-								// 뒤로가기
-								one = false;
-							} else {
-
-								System.out.println("잘못된 번호입니다. 다시 입력해주세요.");
+								System.out.println("일치하는 영수증 번호가 없습니다. 다시 입력해주세요.");
+								System.out.println("");
 								break;
-
 							}
+							
+							/* 주문준비상태일때는 1번을 누르면 완료처리를 할 수 있고 0번은 뒤로가기야 */
+							/* 주문완료상태일때는 1번 옵션이 없고 0번은 뒤로가기야 */
+							while (true) {
+								if (targetFinish) {
+									System.out.print("1.뒤로가기(0) >> ");
+								} else if (targetReady) {
+									System.out.print("1.완료 2.뒤로가기(0) >> ");
+								}
+
+								int menu03 = sc.nextInt();
+
+								if (menu03 == 1 && targetReady) {
+									// 주문 상태를 완료로 변경
+									adminDao.updateState("완료", menu02);
+									one = false;
+									break;
+								} else if (menu03 == 0) {
+									// 뒤로가기
+									one = false;
+									break;
+								} else {
+									System.out.println("잘못된 번호입니다. 다시 입력해주세요.");
+								}
+							}
+
 						}
 
 					} else if (menu01 == 0) {
