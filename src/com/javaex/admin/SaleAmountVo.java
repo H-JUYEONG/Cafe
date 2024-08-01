@@ -2,6 +2,7 @@ package com.javaex.admin;
 
 public class SaleAmountVo {
 
+	private int userId; // 회원 번호
 	private String drinkName; // 음료 이름
 	private int drinkCnt; // 주문된 음료 수량
 	private int drinkPrice; // 음료 개당 가격
@@ -13,13 +14,23 @@ public class SaleAmountVo {
 
 	}
 
-	public SaleAmountVo(String drinkName, int drinkCnt, int drinkPrice, int saleAmountSum, String ymd, String rtime) {
+	public SaleAmountVo(int userId, String drinkName, int drinkCnt, int drinkPrice, int saleAmountSum, String ymd,
+			String rtime) {
+		this.userId = userId;
 		this.drinkName = drinkName;
 		this.drinkCnt = drinkCnt;
 		this.drinkPrice = drinkPrice;
 		this.saleAmountSum = saleAmountSum;
 		this.ymd = ymd;
 		this.rtime = rtime;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getDrinkName() {
@@ -72,8 +83,9 @@ public class SaleAmountVo {
 
 	@Override
 	public String toString() {
-		return "SaleAmountVo [drinkName=" + drinkName + ", drinkCnt=" + drinkCnt + ", drinkPrice=" + drinkPrice
-				+ ", saleAmountSum=" + saleAmountSum + ", ymd=" + ymd + ", rtime=" + rtime + "]";
+		return "SaleAmountVo [userId=" + userId + ", drinkName=" + drinkName + ", drinkCnt=" + drinkCnt
+				+ ", drinkPrice=" + drinkPrice + ", saleAmountSum=" + saleAmountSum + ", ymd=" + ymd + ", rtime="
+				+ rtime + "]";
 	}
 
 }

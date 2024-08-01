@@ -104,28 +104,29 @@ public class AdminApp {
 					String date = sc.nextLine(); // 2024-07-31
 					System.out.println("");
 
-					if(date.equals("0")) {
-			            break;
-			        }
+					if (date.equals("0")) {
+						break;
+					}
 
-			        List<SaleAmountVo> saleAmountList = adminDao.selectSaleAmountAll(date);
-			        int sum = 0;
+					List<SaleAmountVo> saleAmountList = adminDao.selectSaleAmountAll(date);
+					int sum = 0;
 
-			        if(saleAmountList.size() == 0) {
-			            System.out.println("해당 날짜에 판매된 상품이 없습니다.");
-			        } else {
-			            for (int i = 0; i < saleAmountList.size(); i++) { // 음료 판매 총합
-			                System.out.print("상품명: " + saleAmountList.get(i).getDrinkName() + "\t");
-			                System.out.print("수량: " + saleAmountList.get(i).getDrinkCnt() + "\t");
-			                System.out.print("음료 총합: " + saleAmountList.get(i).getSaleAmountSum() + "\t");
-			                System.out.println("판매시간: " + saleAmountList.get(i).getRtime());
-			                sum += saleAmountList.get(i).getSaleAmountSum();
-			            }
-			            System.out.println("판매 총합: " + sum);
-			        }
+					if (saleAmountList.size() == 0) {
+						System.out.println("해당 날짜에 판매된 상품이 없습니다.");
+					} else {
+						for (int i = 0; i < saleAmountList.size(); i++) { // 음료 판매 총합
+							System.out.print("회원번호: " + saleAmountList.get(i).getUserId() + "\t");
+							System.out.print("상품명: " + saleAmountList.get(i).getDrinkName() + "\t");
+							System.out.print("수량: " + saleAmountList.get(i).getDrinkCnt() + "\t");
+							System.out.print("음료 총합: " + saleAmountList.get(i).getSaleAmountSum() + "\t");
+							System.out.println("판매시간: " + saleAmountList.get(i).getRtime());
+							sum += saleAmountList.get(i).getSaleAmountSum();
+						}
+						System.out.println("판매 총합: " + sum);
+					}
 
 				}
-				
+
 			} else if (menu == 3) {
 				while (true) {
 
@@ -198,13 +199,13 @@ public class AdminApp {
 						adminDao.deleteDrink(drinkId);
 
 					} else if (menu01 == 0) {
-						
+
 						System.out.println("");
 						// 뒤로가기
 						break;
 
 					} else {
-						
+
 						System.out.println("");
 						System.out.println("잘못된 번호입니다. 다시 입력해주세요.");
 					}

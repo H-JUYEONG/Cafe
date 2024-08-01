@@ -207,7 +207,8 @@ public class AdminDao {
 			// 3. SQL문 준비 / 바인딩 / 실행
 			// *sql문 준비
 			String query = "";
-			query += " select d.drink_name, ";
+			query += " select u.user_id, ";
+			query += " 		  d.drink_name, ";
 			query += "		  sum(uo.drink_cnt) AS drink_cnt, ";
 			query += "        d.drink_price, ";
 			query += "        sum(uo.drink_cnt * d.drink_price) AS sum_price, ";
@@ -218,8 +219,10 @@ public class AdminDao {
 			query += " on uo.drink_id = d.drink_id ";
 			query += " inner join Receipt r ";
 			query += " on uo.receipt_id = r.receipt_id ";
+			query += " inner join Users u ";
+			query += " on r.user_id = u.user_id ";
 			query += " where date_format(r.receipt_date, '%Y-%m-%d') = ? ";
-			query += " group by d.drink_name, d.drink_price, r.receipt_date ";
+			query += " group by d.drink_name, d.drink_price, r.receipt_date, u.user_id ";
 
 			// *바인딩
 			pstmt = conn.prepareStatement(query);
@@ -231,6 +234,7 @@ public class AdminDao {
 			// 4.결과처리
 			// 리스트로 만들기
 			while (rs.next()) {
+				int id = rs.getInt("user_id");
 				String drinkName = rs.getString("drink_name");
 				int drinkCnt = rs.getInt("drink_cnt");
 				int drinkPrice = rs.getInt("drink_price");
@@ -238,7 +242,7 @@ public class AdminDao {
 				String ymd = rs.getString("receipt_date");
 				String rtime = rs.getString("receipt_time");
 
-				SaleAmountVo saleAmountVo = new SaleAmountVo(drinkName, drinkCnt, drinkPrice, saleAmountSum, ymd, rtime);
+				SaleAmountVo saleAmountVo = new SaleAmountVo(id,drinkName, drinkCnt, drinkPrice, saleAmountSum, ymd, rtime);
 				saleAmountList.add(saleAmountVo);
 			}
 
