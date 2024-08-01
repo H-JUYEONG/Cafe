@@ -53,8 +53,8 @@ public class AdminApp {
 						// 새로고침
 
 					} else if (menu01 == 2) {
-
-						while (true) {
+						boolean one = true;
+						while (one) {
 							System.out.println("");
 							System.out.println("================= 영수증 번호 입력 ===============");
 							System.out.print("영수증 번호를 입력해주세요 >> ");
@@ -62,11 +62,22 @@ public class AdminApp {
 
 							System.out.println("");
 							System.out.println("********** 주문 상세 출력 **********");
-							UserOrderVo userOrderVo = adminDao.selectReceiptOne(menu02);
-							System.out.println("영수증 번호: " + userOrderVo.getReceiptId());
-							System.out.println(
-									"상품명: " + userOrderVo.getDrinkName() + "  수량: " + userOrderVo.getDrinkCnt());
-							System.out.println("");
+
+							List<UserOrderVo> userOrderList = adminDao.selectReceiptOne(menu02, "준비");
+
+							if (userOrderList.size() == 0) {
+								System.out.println("");
+								System.out.println("이미 완료된 상품입니다.");
+								System.out.println("");
+								one = false;
+							} else {
+								for (int i = 0; i < userOrderList.size(); i++) {
+									System.out.print("영수증 번호: " + userOrderList.get(i).getReceiptId() + "\t");
+									System.out.print("상품명: " + userOrderList.get(i).getDrinkName() + "\t");
+									System.out.println("수량: " + userOrderList.get(i).getDrinkCnt());
+								}
+								System.out.println("");
+							}
 
 							System.out.print("1.완료 2.뒤로가기(0) >> ");
 							int menu03 = sc.nextInt();
@@ -75,12 +86,14 @@ public class AdminApp {
 
 								// 주문 상태를 완료로 변경
 								adminDao.updateState("완료", menu02);
+								one = false;
 							} else if (menu03 == 0) {
 								// 뒤로가기
-								break;
+								one = false;
 							} else {
 
 								System.out.println("잘못된 번호입니다. 다시 입력해주세요.");
+								break;
 
 							}
 						}

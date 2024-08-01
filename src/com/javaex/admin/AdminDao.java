@@ -113,8 +113,10 @@ public class AdminDao {
 	}
 
 	// 영수증 번호를 입력받으면 회원이 주문한 영수증 번호, 음료, 수량 출력
-	public UserOrderVo selectReceiptOne(int id) {
-		UserOrderVo userOrderVo = null;
+	public List<UserOrderVo> selectReceiptOne(int id, String state) {
+		
+		List<UserOrderVo> userOrderList = new ArrayList<UserOrderVo>();
+		//UserOrderVo userOrderVo = null;
 		this.getConnection();
 
 		try {
@@ -131,10 +133,12 @@ public class AdminDao {
 			query += " inner join Drink d ";
 			query += " on u.drink_id = d.drink_id ";
 			query += " where r.receipt_id = ? ";
+			query += " and r.receipt_state = ? ";
 
 			// *바인딩
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
+			pstmt.setString(2, state);
 
 			// *실행
 			rs = pstmt.executeQuery();
@@ -147,7 +151,10 @@ public class AdminDao {
 				String name = rs.getString("drink_name");
 				int cnt = rs.getInt("drink_cnt");
 
-				userOrderVo = new UserOrderVo(receiptId, name, cnt);
+				UserOrderVo userOrderVo = new UserOrderVo(receiptId, name, cnt);
+				userOrderList.add(userOrderVo);
+				
+				//userOrderVo = new UserOrderVo(receiptId, name, cnt);
 			}
 
 		} catch (SQLException e) {
@@ -156,7 +163,7 @@ public class AdminDao {
 
 		this.close();
 
-		return userOrderVo; // 리스트의 *주소를 리턴해준다
+		return userOrderList; // 리스트의 *주소를 리턴해준다
 
 	}
 
