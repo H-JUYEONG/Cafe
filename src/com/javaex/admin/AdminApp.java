@@ -9,6 +9,7 @@ public class AdminApp {
 
 		Scanner sc = new Scanner(System.in);
 		AdminDao adminDao = new AdminDao();
+		System.out.println("* 관리자 프로그램 *");
 
 		while (true) {
 			System.out.println("======================= 목록 ==========================================");
